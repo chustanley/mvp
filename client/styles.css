@@ -1,0 +1,10 @@
+#weather {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black;
+  padding: 10px;
+}
+
+#submit {
+  margin-top: 5px;
+}
