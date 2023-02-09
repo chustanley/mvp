@@ -12,6 +12,54 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 
 
+
+app.get('/load', (req, res) => {
+
+  db.City.find().then((data) => {
+    if (!data) {
+      throw data
+    }
+    return data;
+  })
+  .then((data) => {
+
+
+
+
+
+    for (var i = 0; i < data.length; i++) {
+      var longitude = data[i].longitude;
+      var latitude = data[i].latitude;
+
+
+      weather.getWeather(())
+    }
+
+
+
+
+
+
+
+
+
+  })
+  .catch(() => {
+    console.log('THIS AINT WORKING CHEEF')
+  })
+
+
+
+  console.log('HI IM WORKING')
+})
+
+
+
+
+
+
+
+
 app.post('/location', (req, res) => {
   console.log(req.body.data)
 

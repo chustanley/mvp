@@ -12,7 +12,7 @@ const citySchema = new mongoose.Schema({
   latitude: Number
 });
 
- const City = mongoose.model('City', citySchema);
+ let City = mongoose.model('City', citySchema);
 
 
 var storingWeather = (data) => {
@@ -45,3 +45,4 @@ var storingWeather = (data) => {
 }
 
 module.exports.storingWeather = storingWeather;
+module.exports.City = City;
