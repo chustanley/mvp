@@ -3,8 +3,8 @@ const app = express();
 const path = require('path');
 const port = 3000;
 const bodyParser = require('body-parser');
-const weather = require('../client/webpack-src/callingWeatherApi.js')
-
+const weather = require('../client/webpack-src/callingWeatherApi.js');
+const db = require('../database/db_index.js');
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,20 +27,25 @@ app.post('/location', (req, res) => {
       var latitude = coordinate.data[0].lat.toString();
       var longitude = coordinate.data[0].lon.toString();
 
-      console.log(latitude, longitude);
-
       return weather.getWeather(latitude, longitude);
     }
   })
   .then((climate) => {
     if (!climate) {
       throw climate;
+    }
+    return db.storingWeather(climate.data);
+  })
+  .then((data) => { // this is for handling unique error
+    if (!data) { // if null, throw it and send error.
+      throw data
     } else {
-      console.log(climate);
+      res.status(200).send(data);
     }
   })
-  .catch(() => {
+  .catch((err) => {
     console.log('ERROR')
+    res.status(404).send(err);
   })
 
 

@@ -22,7 +22,7 @@ var getWeather = (latitude, longitude) => {
 
   var climateObject = {
     method: 'GET',
-    url: `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${ApiKey}`
+    url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${ApiKey}&units=imperial`
   }
 
   console.log('hi', longitude, latitude)

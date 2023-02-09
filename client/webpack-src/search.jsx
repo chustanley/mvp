@@ -20,8 +20,13 @@ var sending = () => {
     data: {
       data: city
     },
-    success: () => {
+    success: (data) => {
       console.log('success')
+      console.log(data);
+    },
+    error: () => {
+      console.log('ERROR, possible duplicate found')
+      alert('City has already been searched')
     },
     dataType: 'json'
   })
