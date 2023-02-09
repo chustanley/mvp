@@ -1,69 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import List from './weatherList.jsx'
 
 const Search = () => {
 
-const [city, setCity] = useState('');
+const [city, setCity] = useState(''); //type word
 
-const [cityData, setCityData] = useState([]);
+const [cityData, setCityData] = useState({}); // individual data
 
-
-
-
+const [listData, setListData] = useState([]);
 
 
 
-// create get request that will send to a specific endpoint
-/*
+var list = () => {
 
-from there, get all data from mongo. (longitude)
+  console.log('GET LIST OF DATA IS BEING CALLED')
 
-loop through that data array object ()
+  $.ajax({
+    url: '/list',
+    method: 'GET',
+    success: (data) => {
+      console.log('Sucess!', data)
+      setListData(data);
+    },
+    error: (err) => {
+      console.log('Failure!', data)
+    }
+  })
+}
 
-MAKE CALLS to the API with the longitude and latitude
-
-target the .then data and send it all back here.
-
-add all this to city data and then have that send over to the list
+useEffect(() => { // this gives the row its rows.
+  list();
+}, []);
 
 
 
-maybe have a main that targets the my location.
-
-*/
 
 
-var loader = () => {
-$.ajax({
-  url: '/load',
-  type: 'GET',
-  success: () => {
-    console.log('success')
-  },
-  error: () => {
-    console.log('error')
-  }
-})
-};
 
 var getting = (data) => {
   setCity(data.target.value);
 }
 
-var sending = () => { // makes calls to weather API, stores it in database!
-  console.log(city);
+
+
+
+
+
+
+
+var sending = (args) => { // makes calls to weather API, stores it in database!
+
+
+  console.log('=======SEARCH=====>', city); // BE AWARE YOU HAVE TO PICK IT IN DROPDOWN
 
   $.ajax({
     url: '/location',
     type: 'POST',
     data: {
-      data: city
+      data: args// this can only be city for some reason.
     },
     success: (data) => {
       console.log('success')
-      // setCityData(data)
-      loader();
+
+      setCityData(data)
+      list(); // updates the drop down
     },
     error: () => {
       console.log('ERROR, possible duplicate found')
@@ -73,21 +74,25 @@ var sending = () => { // makes calls to weather API, stores it in database!
   })
 }
 
-// console.log('------CITYDATA---->', cityData)
+
 
   return (
     <div>
       <form id='form'>
         <label htmlFor='city'>Please enter city name </label><br></br>
         <input id='city' type='text' onChange={getting}></input><br></br>
-        <button id='submit' type='button' onClick={sending}>Check Weather Now</button>
+        <button id='submit' type='button' onClick={() => { sending(city) }}>Check Weather Now</button>
       </form>
 
       <div>
-        <h1>city:{cityData.name}</h1>
+        <h1>City: {cityData.name}</h1>
+        <h1>Latitude: {cityData.latitude}</h1>
+        <h1>Longitude: {cityData.longitude}</h1>
+        <h1>Temperature: {cityData.temperature}</h1>
+        <h1>Description: {cityData.description}</h1>
       </div>
 
-      <List weather={cityData}/>
+      <List weather={listData} sending={sending} updateMain={setCity}/>
 
     </div>
   )

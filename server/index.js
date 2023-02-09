@@ -12,45 +12,19 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 
 
+app.get('/list', (req, res) => {
+  db.City.find()
+    .then((data) => {
 
-app.get('/load', (req, res) => {
-
-  db.City.find().then((data) => {
-    if (!data) {
-      throw data
-    }
-    return data;
-  })
-  .then((data) => {
-
-
-
-
-
-    for (var i = 0; i < data.length; i++) {
-      var longitude = data[i].longitude;
-      var latitude = data[i].latitude;
-
-
-      weather.getWeather(())
-    }
-
-
-
-
-
-
-
-
-
-  })
-  .catch(() => {
-    console.log('THIS AINT WORKING CHEEF')
-  })
-
-
-
-  console.log('HI IM WORKING')
+      if (!data) {
+        throw data
+      }
+      console.log('THE LIST----->', data)
+      res.status(200).send(data);
+    }).catch((err) => {
+      console.log(err)
+      res.status(404).send(err)
+    })
 })
 
 
@@ -60,46 +34,35 @@ app.get('/load', (req, res) => {
 
 
 
+
 app.post('/location', (req, res) => {
-  console.log(req.body.data)
 
-  console.log(weather)
+  console.log('testing', req.body.data)
 
 
-  weather.getCoordinates(req.body.data)
-  .then((coordinate) => {
-    if (!coordinate) {
-      throw coordinate
-    } else {
-      //This only works for if we find only ONE location
-      var latitude = coordinate.data[0].lat.toString();
-      var longitude = coordinate.data[0].lon.toString();
+  weather.getWeather(req.body.data)
+  .then((city) => {
 
-      return weather.getWeather(latitude, longitude);
+    if (!city) {
+      throw city
     }
+
+    // console.log('----->', city) // this works
+    return db.storingWeather(city.data)
   })
-  .then((climate) => {
-    if (!climate) {
-      throw climate;
+  .then((databaseData) => {
+
+    console.log('------->>>>>>>>>>>>>>>>>>', databaseData)
+
+    if (!databaseData) {
+      throw databaseData
     }
-    return db.storingWeather(climate.data);
-  })
-  .then((data) => { // this is for handling unique error
-    if (!data) { // if null, throw it and send error.
-      throw data
-    } else {
-      res.status(200).send(data);
-    }
+    res.status(200).send(databaseData);
   })
   .catch((err) => {
-    console.log('ERROR')
+    console.log('ERROR', err)
     res.status(404).send(err);
   })
-
-
-
-
-
 })
 
 

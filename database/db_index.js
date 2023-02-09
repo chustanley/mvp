@@ -5,11 +5,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/weatherApp'); //input the database i
 
 const citySchema = new mongoose.Schema({
   name: {
-    type: String,
-    unique: true
+    type: String
   },
   longitude: Number,
-  latitude: Number
+  latitude: Number,
+  temperature: Number,
+  description: String
+
 });
 
  let City = mongoose.model('City', citySchema);
@@ -17,29 +19,50 @@ const citySchema = new mongoose.Schema({
 
 var storingWeather = (data) => {
 
-
-  // console.log(data);
-
   let cityData = new City({
     name: data.name,
     longitude: data.coord.lon,
-    latitude: data.coord.lat
+    latitude: data.coord.lat,
+    temperature: data.main.temp,
+    description: data.weather[0].description
   })
 
 
-  // console.log(cityData)
+  console.log('------updated Schema --->', cityData)
 
-  return cityData.save()
-    .then((cityInfo) => {
-      if (!cityInfo) {
-        throw cityInfo
-      } else {
-        return data // if no problem in saving, return data
+
+  return City.findOne({name: data.name})
+    .then((data) => {
+      if (!data) {
+        throw data
       }
+
+      // delete. then save?
+
+      return City.deleteOne({name: data.name})
+    })
+    .then((deleted) => {
+      return cityData.save();
     })
     .catch((err) => {
-      return null // if problem w/ saving, return null
+      console.log(err)
+      return cityData.save();
     })
+
+
+
+
+
+/*
+
+How to update when we see a match
+
+how to not update when
+
+*/
+
+
+
 
 
 }
