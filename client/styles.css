@@ -74,6 +74,7 @@
   border-radius: 20px;
 
   height: 15px;
+  border-color: transparent;
 
 }
 
@@ -93,6 +94,7 @@
 #dropDown {
   font-size: 20px;
   display: inline-block;
+  border-color: transparent;
 }
 
 #data {

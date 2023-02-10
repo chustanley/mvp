@@ -53,6 +53,11 @@ app.post('/location', (req, res) => {
     if (!databaseData) {
       throw databaseData
     }
+
+
+    databaseData.temperature = Math.floor(databaseData.temperature);
+    databaseData.temperature = databaseData.temperature + '°';
+
     res.status(200).send(databaseData);
   })
   .catch((err) => {

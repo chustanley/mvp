@@ -9,7 +9,7 @@ const citySchema = new mongoose.Schema({
   },
   longitude: Number,
   latitude: Number,
-  temperature: Number,
+  temperature: String,
   description: String
 
 });

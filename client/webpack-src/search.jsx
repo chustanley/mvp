@@ -9,16 +9,13 @@ const Search = () => {
 
 const [city, setCity] = useState(''); //type word
 
-const [cityData, setCityData] = useState({}); // individual data
+const [cityData, setCityData] = useState({temperature: 'loading...'}); // individual data
 
 const [listData, setListData] = useState([]);
 
 
 
 var list = () => {
-
-  console.log('GET LIST OF DATA IS BEING CALLED')
-
   $.ajax({
     url: '/list',
     method: 'GET',
@@ -35,14 +32,13 @@ var list = () => {
 var findGeo = () => {
   const successCallback = (position) => {
 
-    console.log('hi', position.coords.latitude, position.coords.longitude);
 
     weather.currentLocation(position.coords.latitude, position.coords.longitude)
       .then((city) => {
         if (!city) {
           throw city
         }
-        console.log('current location ---->', city.data[0].name);
+
         sending(city.data[0].name)
       })
       .catch((err) => {
@@ -63,7 +59,11 @@ useEffect(() => { // this gives the row its rows.
 }, []);
 
 
+// useEffect(() => {
 
+//   cityData.temperature = cityData.temperature.toString();
+//   cityData.temperature = cityData.temperature + '°'
+// }, cityData);
 
 
 
@@ -81,7 +81,6 @@ var getting = (data) => {
 
 var sending = (args) => { // makes calls to weather API, stores it in database!
   document.getElementById('spinner').style.display = 'block';
-
   console.log('=======SEARCH=====>', city); // BE AWARE YOU HAVE TO PICK IT IN DROPDOWN
 
   $.ajax({
@@ -94,6 +93,21 @@ var sending = (args) => { // makes calls to weather API, stores it in database!
       console.log('success')
 
       setCityData(data)
+
+
+
+      // if (Object.keys(cityData).length !== 0) {
+      //   cityData.temperature = cityData.temperature.toString() + '°';
+      // }
+
+
+
+
+
+
+
+
+
       document.getElementById('spinner').style.display = 'none';
       list(); // updates the drop down
     },
@@ -107,9 +121,12 @@ var sending = (args) => { // makes calls to weather API, stores it in database!
 
 
 
+console.log(typeof cityData.temperature)
+
 
 
   return (
+
     <div>
       <form id='form'>
         <div id='searchBar'>
