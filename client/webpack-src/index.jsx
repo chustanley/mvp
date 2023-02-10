@@ -5,13 +5,10 @@ import Search from './search.jsx'
 const App = () => {
 
 
-  // const [mainWeather, setMainWeather] = useState('');
-
-
-
   return (
-    <div id='weather'>
-      <h1>weatherNow</h1>
+    <div class='card'>
+      <h1 id='title'>weatherNow</h1>
+      <img id='spinner' src='spinner.gif'></img>
       <Search />
     </div>
   );

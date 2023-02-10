@@ -1,10 +1,108 @@
-#weather {
-  border-radius: 5px;
+.card {
+  border-radius: 30px;
   border-style: solid;
-  border-color: black;
-  padding: 10px;
+  border-color: transparent;
+  padding: 2em;
+
+  width: 100%;
+  max-width: 1500px;
+  background: rgba(29, 28, 28, 0.75);
+  display: inline-block;
+  color: white;
 }
 
 #submit {
+  padding-top: 5px;
+  margin-left: 15px;
   margin-top: 5px;
+  margin-top: 5px;
+  border-radius: 50%;
+  border: none;
+  height: 2.0em;
+  width: 2.0em;
+  font-size: 20px;
+  display: inline-block;
+  background-color: rgba(156, 153, 153, 0.75);;
+}
+
+#spinner {
+  height: 60px;
+  width: 60px;
+
+  float: right;
+  align-content: center;
+}
+
+#title {
+  display: inline-block;
+  font-size: 70px;
+}
+
+
+#body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: grey;
+  background-image: url(Raining.jpeg);
+  background-size: cover;
+}
+
+#form {
+  width: 600px;
+  padding-bottom: 35px;
+}
+
+#enter {
+  font-size: 30px;
+}
+
+
+#dropDown, #city {
+  background-color: rgba(105, 104, 104, 0.25);
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+#city {
+  font-size: 20px;
+
+  border-radius: 20px;
+
+  height: 15px;
+
+}
+
+#temp {
+  font-size: 100px;
+}
+
+#cityName {
+  font-size: 50px;
+}
+
+#latilong{
+  display: inline-block;
+  font-size: 25px;
+}
+
+#dropDown {
+  font-size: 20px;
+  display: inline-block;
+}
+
+#data {
+  padding-bottom: 40px;
+}
+
+#status {
+  font-size: 25px;
+}
+
+#searchBar, #searchButton {
+  display: inline-block;
 }

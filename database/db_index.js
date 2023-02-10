@@ -28,7 +28,7 @@ var storingWeather = (data) => {
   })
 
 
-  console.log('------updated Schema --->', cityData)
+  console.log('------updated Schema --->', cityData) // getting the most updated weather for tokyo
 
 
   return City.findOne({name: data.name})

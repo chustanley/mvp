@@ -17,8 +17,18 @@ var location = location;
 }
 
 
+var currentLocation = (latitude, longitude) => {
+  var ApiKey = 'f3b9ce05b328f30e85a7cf26381a19c6'
+  var location = location;
+  var resultObject = {
+    method: 'GET',
+    url: `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=${1}&appid=${ApiKey}`
+  }
+
+  return axios(resultObject)
+}
 
 
 
 
-module.exports = { getWeather }
+module.exports = { getWeather, currentLocation }

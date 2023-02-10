@@ -31,10 +31,6 @@ app.get('/list', (req, res) => {
 
 
 
-
-
-
-
 app.post('/location', (req, res) => {
 
   console.log('testing', req.body.data)
